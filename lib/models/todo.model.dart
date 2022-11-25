@@ -1,6 +1,5 @@
-import 'base.model.dart';
+import 'package:dart_deta_frog_todo_server/models/base.model.dart';
 
-///
 ///
 class Todo extends Model {
   ///

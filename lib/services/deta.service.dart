@@ -42,10 +42,9 @@ class DetaService {
   }) async {
     final base = _deta.base(name.name);
     final result = await base.get(key);
+    final modelInstance = locator<T>();
 
-    T? data;
-
-    return data!.fromJson(result) as T;
+    return modelInstance.fromJson(result) as T;
   }
 
   ///
@@ -54,11 +53,10 @@ class DetaService {
   }) async {
     final base = _deta.base(name.name);
     final result = await base.fetch();
-    final items = result['items'] as List;
     final datas = <T>[];
     final modelInstance = locator<T>();
 
-    for (final element in items) {
+    for (final element in result['items'] as List) {
       datas.add(modelInstance.fromJson(element as Map<String, dynamic>) as T);
     }
 
