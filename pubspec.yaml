@@ -8,6 +8,12 @@ environment:
 
 dependencies:
   dart_frog: ^0.2.0
+  deta: ^0.0.3+1
+  dio: ^4.0.6
+  dio_client_deta_api: ^0.0.1
+  dotenv: ^4.0.1
+  logger: ^1.1.0
+  uuid: ^3.0.7
 
 dev_dependencies:
   mocktail: ^0.3.0
