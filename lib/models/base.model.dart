@@ -1,7 +1,12 @@
 ///
 abstract class Model {
+  ///
   DateTime? updatedAt;
+
+  ///
   DateTime? createdAt;
+
+  ///
   String? key;
 
   ///

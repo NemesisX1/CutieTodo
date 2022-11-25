@@ -43,16 +43,34 @@ class DetaService {
   }
 
   ///
-  Future<Map<String, dynamic>> get<T extends Model>({
+  // Future<Map<String, dynamic>> get<T extends Model>({
+  //   required DetaName name,
+  // }) async {
+  //   final base = _deta.base(name.name);
+  //   final result = await base.fetch();
+  //   // final data = <T>[];
+
+  //   // T? data;
+
+  //   return result;
+  // }
+
+  Future<List<T>> get<T extends Model>({
     required DetaName name,
-    required String key,
   }) async {
     final base = _deta.base(name.name);
     final result = await base.fetch();
-    // final data = <T>[];
+    final items = result['items'] as List;
+    final datas = <T>[];
 
-    // T? data;
+    for (final element in items) {
+      T? data;
 
-    return result;
+      print(T.runtimeType);
+
+      //     datas.add(data!.fromJson(element as Map<String, dynamic>) as T);
+    }
+
+    return datas;
   }
 }
