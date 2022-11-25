@@ -4,11 +4,6 @@ abstract class Model {
   Model();
 
   ///
-  factory Model.fromJson() {
-    throw UnimplementedError();
-  }
-
-  ///
   DateTime? updatedAt;
 
   ///
