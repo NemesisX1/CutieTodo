@@ -1,3 +1,4 @@
 import 'package:dotenv/dotenv.dart';
 
-var env = DotEnv(includePlatformEnvironment: true)..load();
+///
+DotEnv env = DotEnv(includePlatformEnvironment: true)..load();
