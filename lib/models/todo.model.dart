@@ -5,9 +5,9 @@ import 'base.model.dart';
 class Todo extends Model {
   ///
   Todo({
-    required this.title,
-    required this.description,
-  });
+    this.title,
+    this.description,
+  }) : super();
 
   ///
   final String? title;

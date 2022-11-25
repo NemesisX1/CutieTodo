@@ -28,21 +28,22 @@ void main() {
       expect(_testTodoKey, isNotEmpty);
     });
 
-    // test('can get data by key', () async {
-    //   expect(_testTodoKey, isNotNull);
+    if (_testTodoKey != null) {
+      test('can get data by key', () async {
+        expect(_testTodoKey, isNotEmpty);
 
-    //   final todo = await deta.getByKey<Todo>(
-    //     name: DetaName.todos,
-    //     key: _testTodoKey!,
-    //   );
-    //   expect(todo, isNotNull);
-    // });
+        final todo = await deta.getByKey<Todo>(
+          name: DetaName.todos,
+          key: _testTodoKey!,
+        );
+        expect(todo, isNotNull);
+      });
+    }
 
     test('can get all the data', () async {
       final todos = await deta.get<Todo>(
         name: DetaName.todos,
       );
-      print(todos);
       expect(todos, isNotNull);
       expect(todos, isNotEmpty);
     });

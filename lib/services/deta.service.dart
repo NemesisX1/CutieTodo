@@ -1,6 +1,7 @@
 import 'package:dart_deta_frog_todo_server/helpers/enums.dart';
 import 'package:dart_deta_frog_todo_server/helpers/env.dart';
 import 'package:dart_deta_frog_todo_server/models/base.model.dart';
+import 'package:dart_deta_frog_todo_server/models/model.locator.dart';
 import 'package:deta/deta.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_client_deta_api/dio_client_deta_api.dart';
@@ -9,6 +10,11 @@ import 'package:uuid/uuid.dart';
 
 ///
 class DetaService {
+  ///
+  DetaService() {
+    modelLocator();
+  }
+
   final _deta = Deta(
     projectKey: env['DETA_KEY']!,
     client: DioClientDetaApi(dio: Dio()),
@@ -43,18 +49,6 @@ class DetaService {
   }
 
   ///
-  // Future<Map<String, dynamic>> get<T extends Model>({
-  //   required DetaName name,
-  // }) async {
-  //   final base = _deta.base(name.name);
-  //   final result = await base.fetch();
-  //   // final data = <T>[];
-
-  //   // T? data;
-
-  //   return result;
-  // }
-
   Future<List<T>> get<T extends Model>({
     required DetaName name,
   }) async {
@@ -62,13 +56,10 @@ class DetaService {
     final result = await base.fetch();
     final items = result['items'] as List;
     final datas = <T>[];
+    final modelInstance = locator<T>();
 
     for (final element in items) {
-      T? data;
-
-      print(T.runtimeType);
-
-      //     datas.add(data!.fromJson(element as Map<String, dynamic>) as T);
+      datas.add(modelInstance.fromJson(element as Map<String, dynamic>) as T);
     }
 
     return datas;
