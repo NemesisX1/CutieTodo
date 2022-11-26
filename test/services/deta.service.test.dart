@@ -1,14 +1,16 @@
 import 'dart:developer';
 
 import 'package:dart_deta_frog_todo_server/helpers/enums.dart';
+import 'package:dart_deta_frog_todo_server/models/model.locator.dart';
 import 'package:dart_deta_frog_todo_server/models/todo.model.dart';
 import 'package:dart_deta_frog_todo_server/services/deta.service.dart';
 import 'package:test/test.dart';
 
 void main() {
+  setUp(modelLocator);
   group('DetaSevice', () {
     final deta = DetaService();
-    String? _testTodoKey;
+    const testTodoKey = '08efdb61-9ede-4432-a644-af42ace3af42';
 
     test('can be instancied', () {
       expect(DetaService(), isNotNull);
@@ -22,23 +24,35 @@ void main() {
           description: 'This is a description',
         ),
       );
-      _testTodoKey = todo.key;
+
       expect(todo, isNotNull);
-      expect(_testTodoKey, isNotNull);
-      expect(_testTodoKey, isNotEmpty);
+      expect(testTodoKey, isNotNull);
+      expect(testTodoKey, isNotEmpty);
     });
 
-    if (_testTodoKey != null) {
-      test('can get data by key', () async {
-        expect(_testTodoKey, isNotEmpty);
+    test('can get data by key', () async {
+      expect(testTodoKey, isNotEmpty);
 
-        final todo = await deta.getByKey<Todo>(
-          name: DetaName.todos,
-          key: _testTodoKey!,
-        );
-        expect(todo, isNotNull);
-      });
-    }
+      final todo = await deta.getByKey<Todo>(
+        name: DetaName.todos,
+        key: testTodoKey,
+      );
+      expect(todo, isNotNull);
+    });
+
+    test('can update data by key', () async {
+      expect(testTodoKey, isNotEmpty);
+
+      final todo = await deta.update<Todo>(
+        name: DetaName.todos,
+        key: testTodoKey,
+        data: Todo(
+          title: 'Ceci est un test updated',
+          description: 'Ceci est une description updated',
+        ),
+      );
+      expect(todo, isNotNull);
+    });
 
     test('can get all the data', () async {
       final todos = await deta.get<Todo>(

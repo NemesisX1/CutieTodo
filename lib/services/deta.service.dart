@@ -1,19 +1,16 @@
 import 'package:dart_deta_frog_todo_server/helpers/enums.dart';
-import 'package:dart_deta_frog_todo_server/helpers/env.dart';
+import 'package:dart_deta_frog_todo_server/helpers/globals.dart';
 import 'package:dart_deta_frog_todo_server/models/base.model.dart';
-import 'package:dart_deta_frog_todo_server/models/model.locator.dart';
+import 'package:dart_deta_frog_todo_server/models/todo.model.dart';
 import 'package:deta/deta.dart';
+import 'package:deta/src/exceptions.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_client_deta_api/dio_client_deta_api.dart';
-
 import 'package:uuid/uuid.dart';
 
 ///
 class DetaService {
   ///
-  DetaService() {
-    modelLocator();
-  }
 
   final _deta = Deta(
     projectKey: env['DETA_KEY']!,
@@ -31,8 +28,13 @@ class DetaService {
       ..createdAt = DateTime.now()
       ..updatedAt = DateTime.now();
 
-    await base.put(data.toJson());
-    return data;
+    try {
+      await base.put(data.toJson());
+      return data;
+    } catch (e) {
+      logger.w('[DetaService]: Error on save(): $e');
+      rethrow;
+    }
   }
 
   ///
@@ -41,10 +43,54 @@ class DetaService {
     required String key,
   }) async {
     final base = _deta.base(name.name);
-    final result = await base.get(key);
+
     final modelInstance = locator<T>();
 
-    return modelInstance.fromJson(result) as T;
+    try {
+      final result = await base.get(key);
+      return modelInstance.fromJson(result) as T;
+    } catch (e) {
+      logger.w('[DetaService]: Error on update(): $e');
+      rethrow;
+    }
+  }
+
+  ///
+  Future<bool> delete<T extends Model>({
+    required DetaName name,
+    required String key,
+  }) async {
+    final base = _deta.base(name.name);
+
+    try {
+      final result = await base.delete(key);
+      return result;
+    } catch (e) {
+      logger.w('[DetaService]: Error on update(): $e');
+      rethrow;
+    }
+  }
+
+  ///
+  Future<T> update<T extends Model>({
+    required DetaName name,
+    required String key,
+    required T data,
+  }) async {
+    final base = _deta.base(name.name);
+
+    final modelInstance = locator<T>();
+
+    try {
+      final result = await base.update(key: key, item: data.toJson());
+
+      return modelInstance.fromJson(
+        result as Map<String, dynamic>,
+      ) as T;
+    } catch (e) {
+      logger.w('[DetaService]: Error on update(): $e');
+      rethrow;
+    }
   }
 
   ///
@@ -52,12 +98,22 @@ class DetaService {
     required DetaName name,
   }) async {
     final base = _deta.base(name.name);
-    final result = await base.fetch();
+
     final datas = <T>[];
     final modelInstance = locator<T>();
 
-    for (final element in result['items'] as List) {
-      datas.add(modelInstance.fromJson(element as Map<String, dynamic>) as T);
+    try {
+      await base.fetch().then((value) {
+        for (final element in value['items'] as List) {
+          final data =
+              modelInstance.fromJson(element as Map<String, dynamic>) as T;
+
+          datas.add(data);
+        }
+      });
+    } catch (e) {
+      logger.w('[DetaService]: Error on get(): $e');
+      rethrow;
     }
 
     return datas;

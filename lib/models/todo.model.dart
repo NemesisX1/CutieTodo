@@ -1,12 +1,18 @@
 import 'package:dart_deta_frog_todo_server/models/base.model.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'todo.model.g.dart';
 
 ///
+@JsonSerializable()
 class Todo extends Model {
   ///
   Todo({
     this.title,
     this.description,
   }) : super();
+
+  ///
+  factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
 
   ///
   final String? title;
@@ -16,25 +22,11 @@ class Todo extends Model {
 
   @override
   Todo fromJson(Map<String, dynamic> json) {
-    final todo = Todo(
-      title: json['title'] as String?,
-      description: json['description'] as String?,
-    )
-      ..key = json['key'] as String?
-      ..createdAt = DateTime.tryParse(json['createdAt'] as String)
-      ..updatedAt = DateTime.tryParse(json['updatedAt'] as String);
-
-    return todo;
+    return _$TodoFromJson(json);
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'key': key,
-      'title': title,
-      'description': description,
-      'createdAt': createdAt.toString(),
-      'updatedAt': updatedAt.toString(),
-    };
+    return _$TodoToJson(this);
   }
 }

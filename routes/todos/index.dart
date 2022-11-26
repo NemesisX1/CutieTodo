@@ -4,20 +4,17 @@ import 'package:dart_deta_frog_todo_server/controllers/todo.controller.dart';
 import 'package:dart_deta_frog_todo_server/models/todo.model.dart';
 import 'package:dart_frog/dart_frog.dart';
 
-Future<Response> onRequest(RequestContext context, String id) async {
+Future<Response> onRequest(RequestContext context) async {
   final request = context.request;
   final todoController = context.read<TodoController>();
 
   switch (request.method) {
     case HttpMethod.get:
-      return todoController.getById(id);
+      return todoController.get();
 
-    case HttpMethod.put:
+    case HttpMethod.post:
       final todo = Todo.fromJson(await request.json() as Map<String, dynamic>);
-      return todoController.update(id, todo);
-
-    case HttpMethod.delete:
-      return todoController.delete(id);
+      return todoController.create(todo);
   }
   return Response(
     statusCode: HttpStatus.notAcceptable,
