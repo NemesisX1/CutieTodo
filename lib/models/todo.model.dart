@@ -4,7 +4,7 @@ part 'todo.model.g.dart';
 
 ///
 @JsonSerializable()
-class Todo extends Model {
+class Todo extends BaseModel {
   ///
   Todo({
     this.title,

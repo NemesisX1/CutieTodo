@@ -5,7 +5,7 @@ part 'user.model.g.dart';
 ///
 
 @JsonSerializable()
-class User extends Model {
+class User extends BaseModel {
   ///
   User({
     this.username,
@@ -21,10 +21,10 @@ class User extends Model {
   final String? username;
 
   ///
-  final String? password;
+  String? password;
 
   @override
-  Model fromJson(Map<String, dynamic> json) {
+  BaseModel fromJson(Map<String, dynamic> json) {
     return _$UserFromJson(json);
   }
 

@@ -1,15 +1,15 @@
 import 'dart:io';
-
 import 'package:dart_frog/dart_frog.dart';
-
 import 'lib/controllers/controller.locator.dart';
 import 'lib/models/model.locator.dart';
 import 'lib/services/service.locator.dart';
+import 'lib/strategies/strategy.locator.dart';
 
 void setupLocator() {
   modelLocator();
   controllerLocator();
   serviceLocator();
+  strategyLocator();
 }
 
 Future<HttpServer> run(Handler handler, InternetAddress ip, int port) {

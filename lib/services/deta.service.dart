@@ -18,7 +18,7 @@ class DetaService {
   );
 
   ///
-  Future<T> save<T extends Model>({
+  Future<T> save<T extends BaseModel>({
     required DetaName name,
     required T data,
   }) async {
@@ -31,14 +31,14 @@ class DetaService {
     try {
       await base.put(data.toJson());
       return data;
-    } catch (e) {
+    } on DetaException catch (e) {
       logger.w('[DetaService]: Error on save(): $e');
       rethrow;
     }
   }
 
   ///
-  Future<T> getByKey<T extends Model>({
+  Future<T> getByKey<T extends BaseModel>({
     required DetaName name,
     required String key,
   }) async {
@@ -49,14 +49,14 @@ class DetaService {
     try {
       final result = await base.get(key);
       return modelInstance.fromJson(result) as T;
-    } catch (e) {
+    } on DetaException catch (e) {
       logger.w('[DetaService]: Error on update(): $e');
       rethrow;
     }
   }
 
   ///
-  Future<bool> delete<T extends Model>({
+  Future<bool> delete<T extends BaseModel>({
     required DetaName name,
     required String key,
   }) async {
@@ -65,14 +65,14 @@ class DetaService {
     try {
       final result = await base.delete(key);
       return result;
-    } catch (e) {
+    } on DetaException catch (e) {
       logger.w('[DetaService]: Error on update(): $e');
       rethrow;
     }
   }
 
   ///
-  Future<T> update<T extends Model>({
+  Future<T> update<T extends BaseModel>({
     required DetaName name,
     required String key,
     required T data,
@@ -87,14 +87,14 @@ class DetaService {
       return modelInstance.fromJson(
         result as Map<String, dynamic>,
       ) as T;
-    } catch (e) {
+    } on DetaException catch (e) {
       logger.w('[DetaService]: Error on update(): $e');
       rethrow;
     }
   }
 
   ///
-  Future<List<T>> get<T extends Model>({
+  Future<List<T>> get<T extends BaseModel>({
     required DetaName name,
     List<DetaQuery>? query,
     int limit = 1000,
@@ -118,7 +118,7 @@ class DetaService {
           datas.add(data);
         }
       });
-    } catch (e) {
+    } on DetaException catch (e) {
       logger.w('[DetaService]: Error on get(): $e');
       rethrow;
     }

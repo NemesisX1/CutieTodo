@@ -7,6 +7,7 @@ environment:
   sdk: ">=2.18.0 <3.0.0"
 
 dependencies:
+  crypt: ^4.2.1
   dart_frog: ^0.3.1
   dart_jsonwebtoken: ^2.5.0
   deta: ^0.0.3+1
@@ -16,6 +17,7 @@ dependencies:
   get_it: ^7.2.0
   json_annotation: ^4.7.0
   logger: ^1.1.0
+  tuple: ^2.0.1
   uuid: ^3.0.7
 
 dev_dependencies:

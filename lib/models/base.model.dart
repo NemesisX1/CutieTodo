@@ -1,7 +1,7 @@
 ///
-abstract class Model {
+abstract class BaseModel {
   ///
-  Model();
+  BaseModel();
 
   ///
   DateTime? updatedAt;
@@ -16,5 +16,5 @@ abstract class Model {
   Map<String, dynamic> toJson();
 
   ///
-  Model fromJson(Map<String, dynamic> json);
+  BaseModel fromJson(Map<String, dynamic> json);
 }

@@ -2,4 +2,7 @@
 enum DetaName {
   ///
   todos,
+
+  ///
+  users,
 }
