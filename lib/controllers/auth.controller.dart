@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:crypt/crypt.dart';
+import 'package:bcrypt/bcrypt.dart';
 import 'package:dart_deta_frog_todo_server/controllers/base.controller.dart';
 import 'package:dart_deta_frog_todo_server/helpers/enums.dart';
 import 'package:dart_deta_frog_todo_server/helpers/globals.dart';
@@ -10,10 +9,12 @@ import 'package:dart_deta_frog_todo_server/strategies/jwt_auth.strategy.dart';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:deta/deta.dart';
 import 'package:tuple/tuple.dart';
-import 'package:uuid/uuid.dart';
 
 ///
 class AuthController extends BaseController {
+  ///
+  AuthController();
+
   final _detaService = locator<DetaService>();
   final _jwtStrategy = locator<JwtAuthStrategy>();
 
@@ -46,19 +47,21 @@ class AuthController extends BaseController {
       );
     }
 
-    if (Crypt(user.password!).match(userExist.item2!.password!)) {
+    if (!BCrypt.checkpw(user.password!, userExist.item2!.password!)) {
       return Response(
         statusCode: HttpStatus.unauthorized,
         body: 'Your credentials are not allowed',
       );
     }
 
+    final data = userExist.item2!.toJson()..remove('password');
+
     return Response.json(
       body: {
         'token': _jwtStrategy.sign(
           user,
         ),
-        'user': userExist.item2!.toJson().remove('password'),
+        'user': data,
       },
     );
   }
@@ -73,16 +76,22 @@ class AuthController extends BaseController {
         body: 'This user already exist',
       );
     }
-    final userToCreated = user..password = Crypt.sha256(user.password!).salt;
+    final userToCreated = user
+      ..password = BCrypt.hashpw(
+        user.password!,
+        BCrypt.gensalt(),
+      );
 
     final detaUser = await _detaService.save<User>(
       name: DetaName.users,
       data: userToCreated,
     );
 
+    final data = detaUser.toJson()..remove('password');
+
     return Response.json(
       statusCode: HttpStatus.created,
-      body: detaUser.toJson().remove('password'),
+      body: data,
     );
   }
 }

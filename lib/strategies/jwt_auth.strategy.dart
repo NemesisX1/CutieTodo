@@ -1,13 +1,15 @@
 // ignore_for_file: avoid_catching_errors
 
 import 'dart:io';
-import 'package:dart_deta_frog_todo_server/controllers/auth.controller.dart';
+import 'package:bcrypt/bcrypt.dart';
+import 'package:dart_deta_frog_todo_server/helpers/enums.dart';
 import 'package:dart_deta_frog_todo_server/helpers/globals.dart';
 import 'package:dart_deta_frog_todo_server/models/user.model.dart';
+import 'package:dart_deta_frog_todo_server/services/deta.service.dart';
 import 'package:dart_deta_frog_todo_server/strategies/base.strategy.dart';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
-import 'package:tuple/tuple.dart';
+import 'package:deta/deta.dart';
 
 ///
 class JwtAuthStrategy extends Strategy {
@@ -17,7 +19,7 @@ class JwtAuthStrategy extends Strategy {
     required this.expiresIn,
   }) : super();
 
-  final _authController = locator<AuthController>();
+  final _detaService = locator<DetaService>();
 
   ///
   final Duration expiresIn;
@@ -27,7 +29,10 @@ class JwtAuthStrategy extends Strategy {
 
   /// a simple function to sign user with unique token
   String sign(User user) {
-    final jwt = JWT(user.key);
+    final jwt = JWT({
+      'key': user.key,
+      'username': user.username,
+    });
     return jwt.sign(
       SecretKey(jwtSecret!),
       expiresIn: expiresIn,
@@ -36,16 +41,26 @@ class JwtAuthStrategy extends Strategy {
 
   @override
   Future<bool> validate(String username, String password) async {
-    final userExist = await _authController.validateUser(
-      User(
-        username: username,
-        password: password,
-      ),
-    );
-    if (userExist.item1) {
+    try {
+      final users = await _detaService.get<User>(
+        name: DetaName.users,
+        query: [
+          DetaQuery('username').equalTo(username),
+        ],
+      );
+
+      if (users.isEmpty) {
+        return false;
+      }
+
+      if (!BCrypt.checkpw(password, users.first.password!)) {
+        return false;
+      }
+
       return true;
+    } catch (e) {
+      return false;
     }
-    return false;
   }
 
   @override
@@ -71,7 +86,7 @@ class JwtAuthStrategy extends Strategy {
     }
 
     try {
-      JWT.verify(bearerToken, SecretKey(jwtSecret!));
+      final jwt = JWT.verify(bearerToken, SecretKey(jwtSecret!));
     } on JWTExpiredError {
       return Response(
         statusCode: HttpStatus.unauthorized,

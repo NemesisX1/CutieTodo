@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:dart_frog/dart_frog.dart';
 import 'lib/controllers/controller.locator.dart';
@@ -12,11 +13,12 @@ void setupLocator() {
   strategyLocator();
 }
 
-Future<HttpServer> run(Handler handler, InternetAddress ip, int port) {
+Future<HttpServer> run(Handler handler, InternetAddress ip, int port) async {
   // 1. Execute any custom code prior to starting the server...
 
   // 2. Use the provided `handler`, `ip`, and `port` to create a custom `HttpServer`.
   // Or use the Dart Frog serve method to do that for you.
+
   setupLocator();
   return serve(handler, ip, port);
 }
