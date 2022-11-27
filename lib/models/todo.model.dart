@@ -9,6 +9,9 @@ class Todo extends BaseModel {
   Todo({
     this.title,
     this.description,
+    this.userKey,
+    this.startAt,
+    this.endAt,
   }) : super();
 
   ///
@@ -19,6 +22,15 @@ class Todo extends BaseModel {
 
   ///
   final String? description;
+
+  ///
+  final String? userKey;
+
+  ///
+  final DateTime? startAt;
+
+  ///
+  final DateTime? endAt;
 
   @override
   Todo fromJson(Map<String, dynamic> json) {
