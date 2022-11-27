@@ -8,6 +8,7 @@ environment:
 
 dependencies:
   dart_frog: ^0.3.1
+  dart_jsonwebtoken: ^2.5.0
   deta: ^0.0.3+1
   dio: ^4.0.6
   dio_client_deta_api: ^0.0.1

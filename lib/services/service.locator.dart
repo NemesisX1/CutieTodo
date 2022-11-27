@@ -1,5 +1,4 @@
 import 'package:dart_deta_frog_todo_server/helpers/globals.dart';
-import 'package:dart_deta_frog_todo_server/models/todo.model.dart';
 import 'package:dart_deta_frog_todo_server/services/deta.service.dart';
 
 ///

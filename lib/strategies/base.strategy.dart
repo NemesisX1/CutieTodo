@@ -1,3 +1,8 @@
+///
 abstract class Strategy {
-  Future<void> authorize(Map<String, dynamic> headers);
+  ///
+  const Strategy();
+
+  ///
+  Future<bool> authorize(Map<String, dynamic> headers);
 }
