@@ -1,10 +1,8 @@
 // ignore_for_file: avoid_catching_errors
 
 import 'dart:io';
-
 import 'package:dart_deta_frog_todo_server/helpers/globals.dart';
 import 'package:dart_deta_frog_todo_server/strategies/base.strategy.dart';
-import 'package:dart_deta_frog_todo_server/strategies/basic_auth.strategy.dart';
 import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
 ///

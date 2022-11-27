@@ -96,6 +96,8 @@ class DetaService {
   ///
   Future<List<T>> get<T extends Model>({
     required DetaName name,
+    List<DetaQuery>? query,
+    int limit = 1000,
   }) async {
     final base = _deta.base(name.name);
 
@@ -103,7 +105,12 @@ class DetaService {
     final modelInstance = locator<T>();
 
     try {
-      await base.fetch().then((value) {
+      await base
+          .fetch(
+        query: query ?? [],
+        limit: limit,
+      )
+          .then((value) {
         for (final element in value['items'] as List) {
           final data =
               modelInstance.fromJson(element as Map<String, dynamic>) as T;
