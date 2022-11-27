@@ -7,7 +7,7 @@ import 'package:dart_deta_frog_todo_server/services/deta.service.dart';
 import 'package:dart_frog/dart_frog.dart';
 
 ///
-class TodoController implements BaseController {
+class TodoController extends BaseController {
   final _detaService = locator<DetaService>();
 
   ///

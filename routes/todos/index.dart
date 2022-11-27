@@ -17,7 +17,7 @@ Future<Response> onRequest(RequestContext context) async {
       return todoController.create(todo);
   }
   return Response(
-    statusCode: HttpStatus.notAcceptable,
+    statusCode: HttpStatus.methodNotAllowed,
     body: 'This method is not availaible for this route',
   );
 }
