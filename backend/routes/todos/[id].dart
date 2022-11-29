@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:cutie_todo_backend/controllers/todo.controller.dart';
 import 'package:cutie_todo_backend/models/todo.model.dart';
+import 'package:cutie_todo_backend/strategies/jwt_auth.strategy.dart';
 import 'package:dart_frog/dart_frog.dart';
 
 Future<Response> onRequest(RequestContext context, String id) async {
   final request = context.request;
   final todoController = context.read<TodoController>();
+  final jwtStrategy = context.read<JwtAuthStrategy>();
 
   switch (request.method) {
     case HttpMethod.get:

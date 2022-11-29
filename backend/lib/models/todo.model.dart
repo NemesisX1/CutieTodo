@@ -10,6 +10,7 @@ class Todo extends BaseModel {
     this.title,
     this.description,
     this.userKey,
+    this.tags,
     this.startAt,
     this.endAt,
   }) : super();
@@ -25,6 +26,9 @@ class Todo extends BaseModel {
 
   ///
   final String? userKey;
+
+  ///
+  final List<String>? tags;
 
   ///
   final DateTime? startAt;
