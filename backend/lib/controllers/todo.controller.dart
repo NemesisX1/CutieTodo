@@ -5,6 +5,7 @@ import 'package:cutie_todo_backend/helpers/globals.dart';
 import 'package:cutie_todo_backend/models/todo.model.dart';
 import 'package:cutie_todo_backend/services/deta.service.dart';
 import 'package:dart_frog/dart_frog.dart';
+import 'package:deta/deta.dart';
 
 ///
 class TodoController extends BaseController {
@@ -64,6 +65,28 @@ class TodoController extends BaseController {
       );
     } catch (e) {
       logger.w('[TodoController]: Error on get(): $e');
+      return Response.json(
+        statusCode: HttpStatus.badRequest,
+        body: e.toString(),
+      );
+    }
+  }
+
+  ///
+  Future<Response> getByUserId(String userId) async {
+    try {
+      final todos = await _detaService.get<Todo>(
+        name: DetaName.todos,
+        query: [
+          DetaQuery('userId').equalTo(userId),
+        ],
+      );
+
+      return Response.json(
+        body: todos,
+      );
+    } catch (e) {
+      logger.w('[TodoController]: Error on getByUserId(): $e');
       return Response.json(
         statusCode: HttpStatus.badRequest,
         body: e.toString(),

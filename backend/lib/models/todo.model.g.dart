@@ -9,7 +9,7 @@ part of 'todo.model.dart';
 Todo _$TodoFromJson(Map<String, dynamic> json) => Todo(
       title: json['title'] as String?,
       description: json['description'] as String?,
-      isDone: json['isDone'] as bool?,
+      isDone: json['isDone'] as bool? ?? false,
       userKey: json['userKey'] as String?,
       tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
       startAt: json['startAt'] == null

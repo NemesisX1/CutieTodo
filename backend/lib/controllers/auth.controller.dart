@@ -59,8 +59,9 @@ class AuthController extends BaseController {
     return Response.json(
       body: {
         'token': _jwtStrategy.sign(
-          user,
+          User.fromJson(data),
         ),
+        'expriresIn': _jwtStrategy.expiresIn.inSeconds,
         'user': data,
       },
     );

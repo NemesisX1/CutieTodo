@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cutie_todo_backend/controllers/todo.controller.dart';
+import 'package:cutie_todo_backend/helpers/globals.dart';
 import 'package:cutie_todo_backend/models/todo.model.dart';
 import 'package:cutie_todo_backend/strategies/jwt_auth.strategy.dart';
 import 'package:dart_frog/dart_frog.dart';
@@ -10,19 +12,30 @@ Future<Response> onRequest(RequestContext context, String id) async {
   final todoController = context.read<TodoController>();
   final jwtStrategy = context.read<JwtAuthStrategy>();
 
-  switch (request.method) {
-    case HttpMethod.get:
-      return todoController.getById(id);
+  final authResponse = await jwtStrategy.verifyAuth(request.headers);
 
-    case HttpMethod.put:
-      final todo = Todo.fromJson(await request.json() as Map<String, dynamic>);
-      return todoController.update(id, todo);
+  if (authResponse == null) {
+    final jwtUser = jwtStrategy.decode(
+      request.headers[HttpHeaders.authorizationHeader]!.split(' ').last,
+    );
 
-    case HttpMethod.delete:
-      return todoController.delete(id);
+    switch (request.method) {
+      case HttpMethod.get:
+        return todoController.getByUserId(jwtUser.key!);
+
+      case HttpMethod.put:
+        final todo =
+            Todo.fromJson(await request.json() as Map<String, dynamic>);
+        return todoController.update(id, todo);
+
+      case HttpMethod.delete:
+        return todoController.delete(id);
+    }
+    return Response(
+      statusCode: HttpStatus.notAcceptable,
+      body: 'This method is not availaible for this route',
+    );
+  } else {
+    return authResponse;
   }
-  return Response(
-    statusCode: HttpStatus.notAcceptable,
-    body: 'This method is not availaible for this route',
-  );
 }

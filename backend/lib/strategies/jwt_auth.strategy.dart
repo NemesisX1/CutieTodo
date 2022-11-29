@@ -27,7 +27,14 @@ class JwtAuthStrategy extends Strategy {
   ///
   final String? jwtSecret;
 
-  /// a simple function to sign user with unique token
+  /// a simple function to dcode jwt token
+  User decode(String bearerToken) {
+    final jwt = JWT.verify(bearerToken, SecretKey(jwtSecret!));
+
+    return User.fromJson(jwt.payload as Map<String, dynamic>);
+  }
+
+  /// Function to create jwt token from a user instance
   String sign(User user) {
     final jwt = JWT({
       'key': user.key,
@@ -81,7 +88,8 @@ class JwtAuthStrategy extends Strategy {
     if (bearerToken == null) {
       return Response(
         statusCode: HttpStatus.badRequest,
-        body: 'Bad Request',
+        body:
+            'Bad Request. You need to provide a bearer token to access this ressources!',
       );
     }
 
@@ -92,17 +100,11 @@ class JwtAuthStrategy extends Strategy {
         statusCode: HttpStatus.unauthorized,
         body: 'Token expired',
       );
-    } on JWTError catch (e) {
-      logger.w('[JwtAuthStrategy]: A JWTError occured: ${e.message}');
-      return Response(
-        statusCode: HttpStatus.unauthorized,
-        body: e.message,
-      );
     } catch (e) {
       logger.w('[JwtAuthStrategy]: And error occured: ${e.toString()}');
       return Response(
         statusCode: HttpStatus.unauthorized,
-        body: e.toString(),
+        body: 'Bad formatted token !',
       );
     }
 

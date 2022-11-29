@@ -12,7 +12,7 @@ Future<Response> onRequest(RequestContext context) async {
 
     final user = User.fromJson(body);
     if (body.keys.length != 2 &&
-        !(body.keys.contains('password') && body.keys.contains('username'))) {
+        !(body.containsKey('password') && body.containsKey('username'))) {
       return Response(
         statusCode: HttpStatus.badRequest,
         body: 'Your body should provide a username and a password fields',
