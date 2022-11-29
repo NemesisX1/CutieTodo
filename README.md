@@ -1,4 +1,5 @@
-# CutieTodo App 📱🖉
+# 
+CutieTodo App 📱🖉
 
 Cutie Todo is a Dart full stack web application made to help you remind yourself about what you have to do. This project was made as a simple proof of concept that it is possible to build a production-ready app with Dart in both backend and frontend.
 
