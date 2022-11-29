@@ -8,8 +8,8 @@ Cutie Todo is a Dart full stack web application made to help you remind yourself
 
 I have made:
 
-- a client made with Flutter. You can have more details here
-- a backend make up wit [Deta](https://www.deta.sh/) and [Dart Frog](https://dartfrog.vgv.dev) and provide JWT as athentication method and a structure partly inspired by [Nest.js](https://nestjs.com/). You can have more details about how it was made and understand the process here
+- a client made with Flutter. You can have more details [here](https://github.com/NemesisX1/CutieTodo/blob/main/client/README.md).
+- a backend make up wit [Deta](https://www.deta.sh/) and [Dart Frog](https://dartfrog.vgv.dev) and provide JWT as athentication method and a structure partly inspired by [Nest.js](https://nestjs.com/). You can have more details about how it was made and understand the process [here](https://github.com/NemesisX1/CutieTodo/blob/main/backend/README.md).
 
 > ### 💥 Future
 
