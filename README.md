@@ -15,6 +15,10 @@ I have made:
 
 Maybe maintaining it add features and let the community push it forward (or not 💀)
 
-> ## 😎  Author(s)
+> ### 🔰 Credits
+
+The app design was inpirated by Oliver Cederborg and this [UI/UX](https://dribbble.com/shots/15185058-Collection-Tasks).
+
+## 😎  Author(s)
 
 **Elikem Medehou** [![Twitter Follow](https://img.shields.io/twitter/follow/juniormedehou_?label=Follow&style=social)](https://twitter.com/juniormedehou_)
