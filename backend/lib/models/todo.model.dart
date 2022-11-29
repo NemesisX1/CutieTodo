@@ -9,6 +9,7 @@ class Todo extends BaseModel {
   Todo({
     this.title,
     this.description,
+    this.isDone,
     this.userKey,
     this.tags,
     this.startAt,
@@ -17,6 +18,9 @@ class Todo extends BaseModel {
 
   ///
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
+
+  ///
+  final bool? isDone;
 
   ///
   final String? title;
