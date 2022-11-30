@@ -12,6 +12,8 @@ servers:
   - url: http://localhost:8080
 
 tags:
+- name: "/"
+  description: "Access to User data and token"
 - name: "Auth"
   description: "Access to User data and token"
 - name: "Todos"
