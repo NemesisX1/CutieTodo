@@ -19,6 +19,26 @@ tags:
 
 components:
   schemas:
+    User:
+      type: object
+      required:
+        - username
+      properties:
+        key:
+          type: string
+          readOnly: true
+        username:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        
+
     Todo:
       type: object
       required:
@@ -26,6 +46,9 @@ components:
         - description
         - startAt
       properties:
+        key:
+          type: string
+          readOnly: true
         title:
           type: string
         description:
@@ -94,9 +117,32 @@ paths:
           schema:
             type: string
           required: true
+      
+      requestBody:  
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                  format: password
+        required: true
       responses:
         '200':
           description: OK.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user:
+                    schema:
+                    $ref: '#/components/schemas/User'
         '400':
           description: Your body should provide a username and a password fields.
         '401':
@@ -124,9 +170,25 @@ paths:
           schema:
             type: string
           required: true
+      requestBody:  
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                  format: password
+        required: true
       responses:
         '201':
           description: User created with success.
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/User'
         '400':
           description: Your body should provide a username and a password fields.
         '405':
@@ -203,4 +265,5 @@ paths:
       responses:
         '200':
           description: OK
+
 
