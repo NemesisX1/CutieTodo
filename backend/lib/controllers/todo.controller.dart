@@ -7,11 +7,12 @@ import 'package:cutie_todo_backend/services/deta.service.dart';
 import 'package:dart_frog/dart_frog.dart';
 import 'package:deta/deta.dart';
 
-///
+/// Controller in charge of handling everything related to manage
+/// what can happens on the app's to do tasks
 class TodoController extends BaseController {
   final _detaService = locator<DetaService>();
 
-  ///
+  /// create a to do in database
   Future<Response> create(Todo todo) async {
     try {
       final createdTodo = await _detaService.save<Todo>(
@@ -32,7 +33,7 @@ class TodoController extends BaseController {
     }
   }
 
-  ///
+  /// delete a to do in database
   Future<Response> delete(String id) async {
     try {
       final result = await _detaService.delete<Todo>(
@@ -59,7 +60,7 @@ class TodoController extends BaseController {
     }
   }
 
-  ///
+  /// get all the to do created
   Future<Response> get() async {
     try {
       final todos = await _detaService.get<Todo>(name: DetaName.todos);
@@ -76,7 +77,7 @@ class TodoController extends BaseController {
     }
   }
 
-  ///
+  /// get all the to do created by a user given its userId
   Future<Response> getByUserId(String userId) async {
     try {
       final todos = await _detaService.get<Todo>(
@@ -98,7 +99,7 @@ class TodoController extends BaseController {
     }
   }
 
-  ///
+  /// get a specific to do give its id
   Future<Response> getById(String id) async {
     try {
       final todo = await _detaService.getByKey<Todo>(
@@ -124,7 +125,7 @@ class TodoController extends BaseController {
     }
   }
 
-  ///
+  /// update a todo
   Future<Response> update(String id, Todo todo) async {
     try {
       final updatedTodo = await _detaService.update<Todo>(

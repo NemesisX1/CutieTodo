@@ -11,6 +11,7 @@ Future<Response> onRequest(RequestContext context) async {
     final body = await request.json() as Map<String, dynamic>;
 
     final user = User.fromJson(body);
+
     if (body.keys.length != 2 &&
         !(body.containsKey('password') && body.containsKey('username'))) {
       return Response(

@@ -8,16 +8,14 @@ import 'package:dio/dio.dart';
 import 'package:dio_client_deta_api/dio_client_deta_api.dart';
 import 'package:uuid/uuid.dart';
 
-///
+/// Base class to handle Deta cloud storage
 class DetaService {
-  ///
-
   final _deta = Deta(
     projectKey: env['DETA_KEY']!,
     client: DioClientDetaApi(dio: Dio()),
   );
 
-  ///
+  /// create a new [T] object in Deta
   Future<T> save<T extends BaseModel>({
     required DetaName name,
     required T data,
@@ -37,7 +35,8 @@ class DetaService {
     }
   }
 
-  ///
+  /// get a [T] object in Deta by key.
+  /// It converts the raw data to a [T] instance
   Future<T> getByKey<T extends BaseModel>({
     required DetaName name,
     required String key,
@@ -55,7 +54,7 @@ class DetaService {
     }
   }
 
-  ///
+  /// delete a new [T] object in Deta given the key
   Future<bool> delete<T extends BaseModel>({
     required DetaName name,
     required String key,
@@ -71,7 +70,7 @@ class DetaService {
     }
   }
 
-  ///
+  /// update a new [T] object in Deta given the
   Future<T> update<T extends BaseModel>({
     required DetaName name,
     required String key,
@@ -99,7 +98,7 @@ class DetaService {
     }
   }
 
-  ///
+  /// return a list of [T] object from Deta
   Future<List<T>> get<T extends BaseModel>({
     required DetaName name,
     List<DetaQuery>? query,

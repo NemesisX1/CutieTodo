@@ -10,7 +10,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:deta/deta.dart';
 import 'package:tuple/tuple.dart';
 
-///
+/// Controller in charge of handling everything related to authentication
 class AuthController extends BaseController {
   ///
   AuthController();
@@ -18,7 +18,9 @@ class AuthController extends BaseController {
   final _detaService = locator<DetaService>();
   final _jwtStrategy = locator<JwtAuthStrategy>();
 
-  /// check if the user already exist in DetaService
+  /// check if the user already exist in DetaService.
+  /// return both a [bool] and a [User], the user is null when
+  /// the [bool] is set to falce/
   Future<Tuple2<bool, User?>> validateUser(User user) async {
     try {
       final users = await _detaService.get<User>(
@@ -36,7 +38,7 @@ class AuthController extends BaseController {
     }
   }
 
-  ///
+  /// sign in function
   Future<Response> signIn(User user) async {
     final userExist = await validateUser(user);
 
@@ -67,7 +69,7 @@ class AuthController extends BaseController {
     );
   }
 
-  ///
+  /// sign up fonction
   Future<Response> signUp(User user) async {
     final userExist = await validateUser(user);
 
