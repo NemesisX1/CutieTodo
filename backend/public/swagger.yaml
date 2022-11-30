@@ -238,7 +238,47 @@ paths:
       security:
         - jwt:
           - related
-      parameters: []
+      parameters:
+        - name: title
+          in: query
+          description: Your to do's title
+          schema:
+            type: string
+          required: true
+        - name: description
+          in: query
+          description: Your to do's description
+          schema:
+            type: string
+          required: true
+        - name: startAt
+          in: query
+          description: Your to do's starting date
+          schema:
+            type: string
+            format: date-time
+          required: true
+        - name: endAt
+          in: query
+          description: Your to do's ending date
+          schema:
+            type: string
+            format: date-time      
+        - name: tags
+          in: query
+          description: Your to do's tags
+          schema:
+            type: array
+            items:
+              type: string          
+        - name: isDone
+          in: query
+          description: Your to do's status, done or not.
+          schema:
+            type: boolean
+            default: true
+          
+      
       requestBody:  
         content:
           application/json:
@@ -271,7 +311,13 @@ paths:
       security:
         - jwt:
           - related
-      parameters: []
+      parameters:
+        - name: id
+          in: path
+          description: Your to do's id
+          schema:
+            type: string
+          required: true
       responses:
         '200':
           description: OK
@@ -295,7 +341,45 @@ paths:
       security:
         - jwt:
           - related
-      parameters: []
+      parameters:
+        - name: title
+          in: query
+          description: Your to do's title
+          schema:
+            type: string
+          
+        - name: description
+          in: query
+          description: Your to do's description
+          schema:
+            type: string
+          
+        - name: startAt
+          in: query
+          description: Your to do's starting date
+          schema:
+            type: string
+            format: date-time
+          
+        - name: endAt
+          in: query
+          description: Your to do's ending date
+          schema:
+            type: string
+            format: date-time      
+        - name: tags
+          in: query
+          description: Your to do's tags
+          schema:
+            type: array
+            items:
+              type: string          
+        - name: isDone
+          in: query
+          description: Your to do's status, done or not.
+          schema:
+            type: boolean
+            default: true
       requestBody:  
         content:
           application/json:
@@ -322,7 +406,13 @@ paths:
       security:
         - jwt:
           - related
-      parameters: []
+      parameters:
+        - name: id
+          in: path
+          description: Your to do's id
+          schema:
+            type: string
+          required: true
       responses:
         '200':
           description: OK
