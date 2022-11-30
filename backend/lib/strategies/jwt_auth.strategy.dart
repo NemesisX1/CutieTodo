@@ -89,16 +89,16 @@ class JwtAuthStrategy extends Strategy {
       return Response(
         statusCode: HttpStatus.badRequest,
         body:
-            'Bad Request. You need to provide a bearer token to access this ressources!',
+            'Bad Request. You need to provide a bearer token to access this ressources !',
       );
     }
 
     try {
-      final jwt = JWT.verify(bearerToken, SecretKey(jwtSecret!));
+      JWT.verify(bearerToken, SecretKey(jwtSecret!));
     } on JWTExpiredError {
       return Response(
         statusCode: HttpStatus.unauthorized,
-        body: 'Token expired',
+        body: 'Token expired !',
       );
     } catch (e) {
       logger.w('[JwtAuthStrategy]: And error occured: ${e.toString()}');

@@ -1,0 +1,11 @@
+openapi: 3.0.0
+info:
+  description: "API system"
+  version: "1.0.10"
+  title: "Swagger Test"
+servers:
+  - url: http://my-service.info
+    description: Remote server
+tags:
+- name: "user"
+  description: "Access to User"

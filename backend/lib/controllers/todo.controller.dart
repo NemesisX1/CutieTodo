@@ -106,7 +106,7 @@ class TodoController extends BaseController {
         body: todo,
       );
     } catch (e) {
-      logger.w('[TodoController]: Error on getByKey(): $e');
+      logger.w('[TodoController]: Error on getById(): $e');
       return Response.json(
         statusCode: HttpStatus.badRequest,
         body: e.toString(),
@@ -127,7 +127,7 @@ class TodoController extends BaseController {
         body: updatedTodo,
       );
     } catch (e) {
-      logger.w('[TodoController]: Error on getByKey(): $e');
+      logger.w('[TodoController]: Error on update(): $e');
       return Response.json(
         statusCode: HttpStatus.badRequest,
         body: e.toString(),
