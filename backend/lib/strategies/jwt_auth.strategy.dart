@@ -82,6 +82,9 @@ class JwtAuthStrategy extends Strategy {
     for (final element in headers.keys) {
       if (element.toLowerCase() == HttpHeaders.authorizationHeader) {
         bearerToken = headers[element]!.split(' ').last;
+        print(headers[element]);
+
+        /// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiIzY2FmZDVjMC04NTM0LTRhNTYtYmJhZi1mNTgxM2EzMjJhMTgiLCJ1c2VybmFtZSI6ImNkc2QiLCJpYXQiOjE2Njk4MTcyMzMsImV4cCI6MTY2OTgxODEzM30.CNN7_9yJeWLQ1Wb9WyJOd5KZ0Iw7x1mcj_SuhpM4Qys
       }
     }
 
@@ -94,14 +97,21 @@ class JwtAuthStrategy extends Strategy {
     }
 
     try {
+      print(bearerToken);
       JWT.verify(bearerToken, SecretKey(jwtSecret!));
     } on JWTExpiredError {
       return Response(
         statusCode: HttpStatus.unauthorized,
         body: 'Token expired !',
       );
-    } catch (e) {
+    } on JWTError catch (e) {
       logger.w('[JwtAuthStrategy]: And error occured: ${e.toString()}');
+      if (e.message == 'JWTExpiredError: jwt expired') {
+        return Response(
+          statusCode: HttpStatus.unauthorized,
+          body: 'Token expired !',
+        );
+      }
       return Response(
         statusCode: HttpStatus.unauthorized,
         body: 'Bad formatted token !',

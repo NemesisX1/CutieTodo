@@ -80,9 +80,15 @@ class DetaService {
     final base = _deta.base(name.name);
 
     final modelInstance = locator<T>();
+    final oldData = await getByKey<T>(name: name, key: key);
 
     try {
-      final result = await base.update(key: key, item: data.toJson());
+      final dataForUpdate = oldData.updateFromJson(data.toJson());
+
+      final result = await base.update(
+        key: key,
+        item: dataForUpdate.toJson(),
+      );
 
       return modelInstance.fromJson(
         result as Map<String, dynamic>,

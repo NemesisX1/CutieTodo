@@ -13,7 +13,7 @@ servers:
 
 tags:
 - name: "/"
-  description: "Access to User data and token"
+  description: "Base"
 - name: "Auth"
   description: "Access to User data and token"
 - name: "Todos"
@@ -142,6 +142,9 @@ paths:
                 properties:
                   token:
                     type: string
+                  expiresIn:
+                    type: number
+                    default: 900
                   user:
                     schema:
                     $ref: '#/components/schemas/User'
@@ -197,6 +200,7 @@ paths:
           description: This method is not availaible for this route.
         '409':
           description: This user already exist.
+  
   /todos:
     get:
       tags: 
@@ -209,18 +213,19 @@ paths:
       responses:
         '200':
           description: OK
-        '201':
-          description: User created with success.
-        '400':
-          description: Bad Request. You need to provide a bearer token to access this ressources or Your body should provide at least a userId, a title and startAt (timestamp) field or  !
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
+                  
         '401':
           description: Token expired or Bad formatted token.
         '405':
           description: This method is not availaible for this route.
         '409':
           description: This user already exist.
-        '422':
-          description: An error occured when trying to create data. It is a database issue.
         
     post:
       tags: 
@@ -230,9 +235,30 @@ paths:
         - jwt:
           - related
       parameters: []
+      requestBody:  
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Todo'
       responses:
-        '200':
-          description: OK
+        '201':
+          description: User created with success.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
+        '400':
+          description: Bad Request. You need to provide a bearer token to access this ressources or your body is bad formatted. Look at the response for more details !
+        '401':
+          description: Token expired or Bad formatted token.
+        '405':
+          description: This method is not availaible for this route.
+        '422':
+          description: An error occured when trying to create data. It is a database issue.
+        
+        
   /todos/{id}:
     get:
       tags: 
@@ -267,5 +293,6 @@ paths:
       responses:
         '200':
           description: OK
+
 
 

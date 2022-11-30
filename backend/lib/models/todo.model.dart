@@ -29,7 +29,7 @@ class Todo extends BaseModel {
   final String? description;
 
   ///
-  final String? userKey;
+  String? userKey;
 
   ///
   final List<String>? tags;

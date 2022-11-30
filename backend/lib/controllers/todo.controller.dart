@@ -14,7 +14,10 @@ class TodoController extends BaseController {
   ///
   Future<Response> create(Todo todo) async {
     try {
-      final createdTodo = await _detaService.get<Todo>(name: DetaName.todos);
+      final createdTodo = await _detaService.save<Todo>(
+        name: DetaName.todos,
+        data: todo,
+      );
 
       return Response.json(
         statusCode: HttpStatus.created,
@@ -78,7 +81,7 @@ class TodoController extends BaseController {
       final todos = await _detaService.get<Todo>(
         name: DetaName.todos,
         query: [
-          DetaQuery('userId').equalTo(userId),
+          DetaQuery('userKey').equalTo(userId),
         ],
       );
 

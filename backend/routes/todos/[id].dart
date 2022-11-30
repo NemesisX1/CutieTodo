@@ -19,20 +19,32 @@ Future<Response> onRequest(RequestContext context, String id) async {
       request.headers[HttpHeaders.authorizationHeader]!.split(' ').last,
     );
 
+    final body = await request.json() as Map<String, dynamic>;
+
     switch (request.method) {
       case HttpMethod.get:
-        return todoController.getByUserId(jwtUser.key!);
+        return todoController.getById(id);
 
       case HttpMethod.put:
-        final todo =
-            Todo.fromJson(await request.json() as Map<String, dynamic>);
+        if (body.containsKey('key') ||
+            body.containsKey('userKey') ||
+            body.containsKey('createdAt') ||
+            body.containsKey('updatedAt')) {
+          return Response(
+            statusCode: HttpStatus.badRequest,
+            body:
+                'Only the title, description, startAt, endAt and isDone fields are allowed to be updated',
+          );
+        }
+        final todo = Todo.fromJson(body);
+
         return todoController.update(id, todo);
 
       case HttpMethod.delete:
         return todoController.delete(id);
     }
     return Response(
-      statusCode: HttpStatus.notAcceptable,
+      statusCode: HttpStatus.methodNotAllowed,
       body: 'This method is not availaible for this route',
     );
   } else {

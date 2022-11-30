@@ -24,8 +24,8 @@ Future<Response> onRequest(RequestContext context) async {
         return todoController.getByUserId(jwtUser.key!);
 
       case HttpMethod.post:
-        if (!(body.containsKey('userId') &&
-            body.containsKey('title') &&
+        if (!(body.containsKey('title') &&
+            body.containsKey('description') &&
             body.containsKey('startAt'))) {
           return Response(
             statusCode: HttpStatus.badRequest,
@@ -33,7 +33,20 @@ Future<Response> onRequest(RequestContext context) async {
                 'Your body should provide at least a userId, a title and startAt (timestamp) field',
           );
         }
+        if (body.containsKey('key') ||
+            body.containsKey('userKey') ||
+            body.containsKey('createdAt') ||
+            body.containsKey('updatedAt')) {
+          return Response(
+            statusCode: HttpStatus.badRequest,
+            body:
+                'Only the title, description, startAt, endAt and isDone fields are allowed',
+          );
+        }
+
         final todo = Todo.fromJson(body);
+        todo.userKey = jwtUser.key;
+
         return todoController.create(todo);
     }
     return Response(
