@@ -46,8 +46,9 @@ class TodoController extends BaseController {
           body: '$id deleted',
         );
       }
-      return Response.json(
+      return Response(
         statusCode: HttpStatus.notFound,
+        body: 'Ressource not found',
       );
     } catch (e) {
       logger.w('[TodoController]: Error on delete(): $e');
@@ -110,7 +111,13 @@ class TodoController extends BaseController {
       );
     } catch (e) {
       logger.w('[TodoController]: Error on getById(): $e');
-      return Response.json(
+      if (e.toString().contains('was not found')) {
+        return Response(
+          statusCode: HttpStatus.notFound,
+          body: 'Ressource not found',
+        );
+      }
+      return Response(
         statusCode: HttpStatus.badRequest,
         body: e.toString(),
       );

@@ -220,8 +220,12 @@ paths:
                 items:
                   $ref: '#/components/schemas/Todo'
                   
+        '400':
+          description: Bad Request. You need to provide a bearer token to access this ressources or your body is bad formatted. Look at the response for more details !
+  
         '401':
           description: Token expired or Bad formatted token.
+          
         '405':
           description: This method is not availaible for this route.
         '409':
@@ -271,6 +275,19 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Todo'
+        '400':
+          description: Bad Request. You need to provide a bearer token to access this ressources or your body is bad formatted. Look at the response for more details !
+        '401':
+          description: Token expired or Bad formatted token.
+        '405':
+          description: This method is not availaible for this route.
+        '422':
+          description: An error occured when trying to create data. It is a database issue.
+        
     put:
       tags: 
         - Todos
@@ -282,6 +299,19 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Todo'
+        '400':
+          description: Bad Request. You need to provide a bearer token to access this ressources or your body is bad formatted. Look at the response for more details !
+        '401':
+          description: Token expired or Bad formatted token.
+        '405':
+          description: This method is not availaible for this route.
+        '422':
+          description: An error occured when trying to create data. It is a database issue.
+
     delete:
       tags: 
         - Todos
