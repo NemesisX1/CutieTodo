@@ -296,6 +296,11 @@ paths:
         - jwt:
           - related
       parameters: []
+      requestBody:  
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Todo'
       responses:
         '200':
           description: OK
