@@ -8,7 +8,23 @@ Future<Response> onRequest(RequestContext context) async {
       HttpHeaders.contentTypeHeader:
           ContentType('text', 'html', charset: 'utf-8').toString(),
     },
-    body: '''
+    body:
+
+//   '''
+// <!doctype html> <!-- Important: must specify -->
+// <html>
+//   <head>
+//     <meta charset="utf-8"> <!-- Important: rapi-doc uses utf8 characters -->
+//     <script type="module" src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"></script>
+//   </head>
+//   <body>
+//     <rapi-doc spec-url = "${env['SERVER_BASE_URL']}/swagger.yaml" theme = 'dark'> </rapi-doc>
+//   </body>
+// </html>
+
+// '''
+
+        '''
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,11 +45,11 @@ Future<Response> onRequest(RequestContext context) async {
   window.onload = () => {
     window.ui = SwaggerUIBundle({
       dom_id: '#swagger-ui',
-      
+
       url: "${env['SERVER_BASE_URL']}/swagger.yaml",
       syntaxHighlight: {
         activate: true,
-        
+
       },
     });
   };
