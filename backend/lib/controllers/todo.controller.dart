@@ -23,7 +23,7 @@ class TodoController extends BaseController {
     } catch (e) {
       logger.w('[TodoController]: Error on create(): $e');
       return Response.json(
-        statusCode: HttpStatus.badRequest,
+        statusCode: HttpStatus.unprocessableEntity,
         body: e.toString(),
       );
     }

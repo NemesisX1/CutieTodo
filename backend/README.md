@@ -6,6 +6,10 @@
 
 An example application built with dart_frog
 
+
+https://editor.swagger.io/?_ga=2.222611155.936165545.1669805062-1638463086.1669805062
+
+
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license_link]: https://opensource.org/licenses/MIT
 [very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg

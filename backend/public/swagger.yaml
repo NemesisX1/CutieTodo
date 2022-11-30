@@ -1,11 +1,206 @@
 openapi: 3.0.0
 info:
-  description: "API system"
+  title: "CutieTodo Docs"
+  description: "CutieTodo app's server docs, a server app fully made up with Dart and its http framework Frog."
   version: "1.0.10"
-  title: "Swagger Test"
+  contact:
+    email: juniormedehou@gmail.com
+  license:
+    name: MIT Licence
+    url: https://github.com/NemesisX1/CutieTodo/blob/main/LICENCE
 servers:
-  - url: http://my-service.info
-    description: Remote server
+  - url: http://localhost:8080
+
 tags:
-- name: "user"
-  description: "Access to User"
+- name: "Auth"
+  description: "Access to User data and token"
+- name: "Todos"
+  description: "Access to Todo data"
+
+components:
+  schemas:
+    Todo:
+      type: object
+      required:
+        - title
+        - description
+        - startAt
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        isDone:
+          type: boolean
+          default: false
+        startAt:
+          type: string
+          format: date-time
+          description: "A timestamp related to the stating date of the task to do"
+        endAt:
+          type: string
+          format: date-time
+          description: "A timestamp related to the endign date of the task to do"
+        userKey:
+          type: string
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+
+    
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+paths:
+  /:
+    get:
+      tags:
+        - /
+      description: 'Simple route to check if server is up'
+      responses:
+        '200':
+          description: OK.
+
+
+  /auth/login:
+    post:
+      tags: 
+        - Auth      
+      description: 'Login the user and give back its data and associated JWT Token'
+
+      parameters:
+        - name: username
+          in: query
+          description: User's username
+          schema:
+            type: string
+          required: true
+        - name: password
+          in: query
+          description: User's password
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK.
+        '400':
+          description: Your body should provide a username and a password fields.
+        '401':
+          description: Your credentials are not allowed. Bad credentials.
+        '404':
+          description: This user doesn't exist.
+        '405':
+          description: This method is not availaible for this route.
+  
+  /auth/register:
+    post:
+      tags: 
+        - Auth
+      description: ''
+      parameters:
+        - name: username
+          in: query
+          description: User's username
+          schema:
+            type: string
+          required: true
+        - name: password
+          in: query
+          description: User's password
+          schema:
+            type: string
+          required: true
+      responses:
+        '201':
+          description: User created with success.
+        '400':
+          description: Your body should provide a username and a password fields.
+        '405':
+          description: This method is not availaible for this route.
+        '409':
+          description: This user already exist.
+  /todos:
+    get:
+      tags: 
+        - Todos
+      description: ''
+      security:
+        - jwt:
+          - related
+      parameters: []
+      responses:
+        '200':
+          description: OK
+        '201':
+          description: User created with success.
+        '400':
+          description: Bad Request. You need to provide a bearer token to access this ressources or Your body should provide at least a userId, a title and startAt (timestamp) field or  !
+        '401':
+          description: Token expired or Bad formatted token.
+        '405':
+          description: This method is not availaible for this route.
+        '409':
+          description: This user already exist.
+        '422':
+          description: An error occured when trying to create data. It is a database issue.
+        
+    post:
+      tags: 
+        - Todos
+      description: ''
+      security:
+        - jwt:
+          - related
+      parameters: []
+      responses:
+        '200':
+          description: OK
+  /todos/{id}:
+    get:
+      tags: 
+        - Todos
+      description: ''
+      security:
+        - jwt:
+          - related
+      parameters: []
+      responses:
+        '200':
+          description: OK
+    put:
+      tags: 
+        - Todos
+      description: ''
+      security:
+        - jwt:
+          - related
+      parameters: []
+      responses:
+        '200':
+          description: OK
+    delete:
+      tags: 
+        - Todos
+      description: ''
+      security:
+        - jwt:
+          - related
+      parameters: []
+      responses:
+        '200':
+          description: OK
+

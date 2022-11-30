@@ -3,8 +3,6 @@ import 'package:cutie_todo_backend/helpers/globals.dart';
 import 'package:dart_frog/dart_frog.dart';
 
 Future<Response> onRequest(RequestContext context) async {
-  final path = 'specs/swagger.yaml';
-
   return Response(
     headers: {
       HttpHeaders.contentTypeHeader:
