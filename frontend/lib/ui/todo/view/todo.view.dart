@@ -1,11 +1,11 @@
 import 'package:cutie_todo_app/ui/todo/cubit/todo.cubit.dart';
 import 'package:cutie_todo_app/ui/todo/view/widgets/add_task_bottom_sheet.dart';
-import 'package:cutie_todo_app/ui/todo/view/widgets/custom_checkbox.dart';
 import 'package:cutie_todo_app/ui/todo/view/widgets/todo_tile.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class TodoPage extends StatelessWidget {
   const TodoPage({super.key});
@@ -72,9 +72,51 @@ class _TodoViewState extends State<TodoView> {
                   ),
                   position: PopupMenuPosition.under,
                   itemBuilder: (context) {
-                    return const [
+                    return [
                       PopupMenuItem(
-                        child: Text(''),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const CircleAvatar(
+                              radius: 50,
+                              backgroundImage: NetworkImage(
+                                'https://avatars.githubusercontent.com/u/55746329?v=4',
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                launchUrlString('https://github.com/NemesisX1');
+                              },
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                foregroundColor: Colors.pinkAccent,
+                              ),
+                              child: const Text(
+                                'Made with love 💙 by NemesisX1',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                launchUrlString(
+                                    'https://github.com/NemesisX1/CutieTodo');
+                              },
+                              style: TextButton.styleFrom(
+                                foregroundColor: Colors.pinkAccent,
+                              ),
+                              child: Text(
+                                'Full code here',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: Colors.pink.shade400,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ];
                   },
@@ -87,7 +129,7 @@ class _TodoViewState extends State<TodoView> {
                 padding: const EdgeInsets.only(
                   top: 30,
                 ),
-                child: Column(
+                child: Wrap(
                   children: const [
                     ExpansionTile(
                       initiallyExpanded: true,
@@ -120,8 +162,6 @@ class _TodoViewState extends State<TodoView> {
                       collapsedIconColor: Colors.white,
                       children: [
                         TodoTile(),
-                        TodoTile(),
-                        TodoTile(),
                       ],
                     ),
                   ],
@@ -136,6 +176,7 @@ class _TodoViewState extends State<TodoView> {
         onPressed: () {
           showModalBottomSheet<String>(
             context: context,
+            isScrollControlled: true,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
                 top: Radius.circular(10),

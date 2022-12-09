@@ -23,7 +23,7 @@ class CustomCheckbox extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(
             color: Colors.pink.shade400,
-            width: 3,
+            width: 4,
           ),
           color: isChecked ? Colors.pink.shade400 : null,
           borderRadius: BorderRadius.circular(10),

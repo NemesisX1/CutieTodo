@@ -26,7 +26,7 @@ class _TodoTileState extends State<TodoTile> {
     return IntrinsicHeight(
       child: Container(
         padding: const EdgeInsets.all(15),
-        margin: EdgeInsets.only(bottom: 15),
+        margin: const EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(
           color: Colors.grey.withOpacity(0.15),
           borderRadius: BorderRadius.circular(20),
@@ -62,7 +62,7 @@ class _TodoTileState extends State<TodoTile> {
                     ),
                   ),
                 ),
-                Gap(5),
+                const Gap(5),
                 Row(
                   children: const [
                     Icon(
