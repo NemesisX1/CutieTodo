@@ -8,4 +8,14 @@ class TodoCubit extends Cubit<TodoState> {
     state.tags.add(tag);
     emit(state);
   }
+
+  void setStartDate(DateTime time) {
+    state.startDate = time;
+    emit(state);
+  }
+
+  void setEndDate(DateTime time) {
+    state.endDate = time;
+    emit(state);
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:cutie_todo_app/core/models/todo.model.dart';
 import 'package:cutie_todo_app/ui/todo/view/widgets/custom_checkbox.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -49,11 +50,13 @@ class _TodoTileState extends State<TodoTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.6,
+                  constraints: const BoxConstraints(
+                    maxWidth: kIsWeb ? 350 : 250,
                   ),
                   child: Text(
                     'Finish the essay about collaboratio dd qsqsd qsd qd n',
+                    maxLines: 3,
+                    softWrap: true,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 17,
