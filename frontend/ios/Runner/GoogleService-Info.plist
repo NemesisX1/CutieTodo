@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>552028729796-sgbkfpgpmngtl7ibf3pmopco8l5r0mp9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.552028729796-sgbkfpgpmngtl7ibf3pmopco8l5r0mp9</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBa1M4TPzPDpnMdm-AmWd3F1NRD2RcxEPE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>552028729796</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.verygoodcore.cutie-todo-app</string>
+	<key>PROJECT_ID</key>
+	<string>cutie-todo</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cutie-todo.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:552028729796:ios:a87d7f924fc9e98fa6b491</string>
+</dict>
+</plist>

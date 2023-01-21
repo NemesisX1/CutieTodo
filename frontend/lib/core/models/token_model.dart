@@ -1,9 +1,11 @@
-import 'package:cutie_todo_app/core/models/base.model.dart';
+import 'package:cutie_todo_app/core/models/base_model.dart';
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'token.model.g.dart';
+part 'token_model.g.dart';
 
+@HiveType(typeId: 1)
 @JsonSerializable(explicitToJson: true)
-class Token extends BaseModel {
+class Token extends HiveObject implements BaseModel {
   Token({
     required this.token,
     required this.expiresIn,
@@ -16,8 +18,11 @@ class Token extends BaseModel {
     return tokenInstance;
   }
 
+  @HiveField(0)
   final String token;
+  @HiveField(1)
   int createdAt;
+  @HiveField(2)
   final int expiresIn;
 
   bool get hasExpired {
