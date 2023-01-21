@@ -8,6 +8,7 @@ environment:
   flutter: 3.3.8
 
 dependencies:
+  auto_size_text: ^3.0.0
   bloc: ^8.1.0
   date_time_picker: ^2.1.0
   flutter:
@@ -17,7 +18,7 @@ dependencies:
     sdk: flutter
   gap: ^2.0.1
   get_it: ^7.2.0
-  go_router: ^0.0.1
+  go_router: ^6.0.1
   intl: ^0.17.0
   json_annotation: ^4.7.0
   omni_datetime_picker: ^0.1.3

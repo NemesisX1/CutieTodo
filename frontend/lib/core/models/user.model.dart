@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'user.model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class User implements BaseModel {
+class User extends BaseModel {
   User({
     required this.key,
     required this.username,

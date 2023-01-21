@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'todo.model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class Todo implements BaseModel {
+class Todo extends BaseModel {
   ///
   Todo({
     required this.key,

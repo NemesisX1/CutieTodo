@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'token.model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class Token implements BaseModel {
+class Token extends BaseModel {
   Token({
     required this.token,
     required this.expiresIn,
@@ -28,7 +28,7 @@ class Token implements BaseModel {
   }
 
   bool get isEmpty {
-    if (token! == '') {
+    if (token == '') {
       return true;
     }
     return false;

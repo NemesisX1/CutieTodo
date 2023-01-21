@@ -1,4 +1,5 @@
 import 'package:cutie_todo_app/l10n/l10n.dart';
+import 'package:cutie_todo_app/routes.dart';
 import 'package:cutie_todo_app/ui/auth/cubit/auth_cubit.dart';
 import 'package:cutie_todo_app/ui/auth/views/auth_page.dart';
 import 'package:cutie_todo_app/ui/counter/view/counter_page.dart';
@@ -21,7 +22,7 @@ class App extends StatelessWidget {
           create: (BuildContext context) => AuthCubit(),
         )
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.black,
           appBarTheme: const AppBarTheme(
@@ -66,7 +67,7 @@ class App extends StatelessWidget {
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: const TodoPage(),
+        routerConfig: router,
       ),
     );
   }
