@@ -1,4 +1,4 @@
-import 'package:cutie_todo_app/core/models/todo.model.dart';
+import 'package:cutie_todo_app/core/models/todo_model.dart';
 import 'package:cutie_todo_app/ui/todo/view/widgets/custom_checkbox.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
