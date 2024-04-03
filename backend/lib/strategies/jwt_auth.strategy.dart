@@ -97,14 +97,13 @@ class JwtAuthStrategy extends Strategy {
     }
 
     try {
-      print(bearerToken);
       JWT.verify(bearerToken, SecretKey(jwtSecret!));
-    } on JWTExpiredError {
+    } on JWTExpiredException {
       return Response(
         statusCode: HttpStatus.unauthorized,
         body: 'Token expired !',
       );
-    } on JWTError catch (e) {
+    } on JWTException catch (e) {
       logger.w('[JwtAuthStrategy]: And error occured: ${e.toString()}');
       if (e.message == 'JWTExpiredError: jwt expired') {
         return Response(
